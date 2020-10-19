@@ -9,7 +9,7 @@ const connectionOptions: ConnectionOptions = {
   port: 5432, // postgresql 기본 포트이므로 다른 RDBMS를 사용한다면 변경할 것
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
-  database: "uber",
+  database: process.env.DB_DATABASE,
   synchronize: true, // django로 치면 자동으로 migration 하는 것
   logging: true,
   entities: ["./entities/**/*.*"],
