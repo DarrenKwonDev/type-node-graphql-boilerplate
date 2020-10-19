@@ -3,6 +3,7 @@ import path from "path";
 dotenv.config({ path: path.resolve(__dirname, "../.env") });
 import express from "express";
 import { graphqlHTTP } from "express-graphql";
+import expressPlayground from "graphql-playground-middleware-express";
 import logger from "morgan";
 import cors from "cors";
 import schema from "./schema";
@@ -14,8 +15,6 @@ const app = express();
 // middleware
 app.use(logger(isProd ? "combined" : "dev"));
 app.use(cors());
-
-// router
 app.use(
   "/graphql",
   graphqlHTTP({
@@ -24,5 +23,8 @@ app.use(
   })
 );
 
+// router
+app.get("/playground", expressPlayground({ endpoint: "/graphql" }));
+
 // listener
-app.listen(PORT, () => console.log(`TS Backend on : http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`TS Backend on : http://localhost:${PORT}/playground`));
